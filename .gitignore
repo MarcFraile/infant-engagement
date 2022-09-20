@@ -1,0 +1,17 @@
+# Python & VS Code
+
+__pycache__/
+.vscode
+.mypy_cache/
+.venv
+.ipynb_checkpoints/
+
+# ELAN
+
+elan/*.pfsx
+
+# Other
+
+scratch/
+.swp
+runs/
