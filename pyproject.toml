@@ -5,10 +5,17 @@ description = "Companion code for the ICMI'22 article 'End-to-End Learning and A
 authors = ["MarcFraile <marc.fraile.fabrega@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "infant_engagement"}]
+packages = [{include = "local"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+numpy = "^1.23.3"
+pandas = "^1.5.0"
+torch = "^1.12.1"
+torchvision = "^0.13.1"
+tqdm = "^4.64.1"
+matplotlib = "^3.6.0"
+imageio = "^2.22.0"
 
 
 [build-system]
