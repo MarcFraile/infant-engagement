@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "infant-engagement"
+version = "0.1.0"
+description = "Companion code for the ICMI'22 article 'End-to-End Learning and Analysis of Infant Engagement During Guided Play: Prediction and Explainability'"
+authors = ["MarcFraile <marc.fraile.fabrega@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "infant_engagement"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
