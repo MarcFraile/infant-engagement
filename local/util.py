@@ -7,7 +7,7 @@ import numpy as np
 import imageio
 
 import torch
-from torch import nn, cuda, Tensor
+from torch import nn, Tensor
 import torchvision
 
 
@@ -197,16 +197,6 @@ def denormalize(y: Tensor, mean, std, dim: int) -> Tensor:
     std  = to_torch(std , y.dim(), dim)
 
     return y * std + mean
-
-
-# TODO: Phase out in favor of PrettyCli-version in e2e/cli_helpers.py
-def print_device_details(device: torch.device) -> None:
-    raise Warning("Outdated method. Use e2e/cli_helpers.py")
-    props = cuda.get_device_properties(device)
-    print(f"name:    {props.name}")
-    print(f"version: {props.major}.{props.minor}")
-    print(f"memory:  {props.total_memory / (1024 * 1024 * 1024):4.02f} GB")
-    print(f"cores:   {props.multi_processor_count}")
 
 
 def next_letter(letter: str) -> str:
