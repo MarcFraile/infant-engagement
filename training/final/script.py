@@ -4,8 +4,7 @@
 # ================ IMPORTS ================ #
 
 
-# import argparse
-import sys, os
+import os
 from pathlib import Path
 from datetime import datetime
 import copy
@@ -14,8 +13,6 @@ from typing import Optional, Tuple, Dict, Any
 import torch
 import pandas as pd
 from matplotlib import pyplot as plt
-
-sys.path.append(os.getcwd())
 
 from local.cli.pretty_cli import PrettyCli
 from local.cli.cli_helpers import Environment, RelabeledCliHelper

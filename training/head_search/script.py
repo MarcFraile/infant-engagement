@@ -5,7 +5,7 @@
 
 
 from dataclasses import asdict
-import sys, os
+import os
 from pathlib import Path
 from datetime import datetime
 from typing import Tuple
@@ -13,13 +13,8 @@ from typing import Tuple
 import torch
 from torch import nn
 
-# NOTE: I usually prefer importing general libs BEFORE torch libs.
-#       However, I'm getting a segfault when importing pyplot before torchvision.
-#       Seems to be a problem with which version gets loaded?
 import pandas as pd
 from tqdm import trange
-
-sys.path.append(os.getcwd())
 
 from local.cli.pretty_cli import PrettyCli
 from local.cli.cli_helpers import RelabeledCliHelper

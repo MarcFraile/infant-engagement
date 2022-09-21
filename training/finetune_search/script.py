@@ -4,7 +4,6 @@
 # ================ IMPORTS ================ #
 
 
-# import argparse
 from dataclasses import dataclass, asdict
 import sys, os
 from pathlib import Path
@@ -318,9 +317,6 @@ def report_results(out_path: Path, start_time: datetime, search_results: SearchR
 
 
 def kickstart():
-    # parser = argparse.ArgumentParser(description="Does a grid search of the hyper-parameter space for network fine-tuning.")
-    # parser.add_argument("--")
-
     out_root : Optional[Path] = None
     if len(sys.argv) > 1:
         out_root = Path(sys.argv[1])
@@ -333,9 +329,6 @@ def kickstart():
             with_stack=True,
         ) as prof:
             main(out_root, prof)
-
-        # cli.section("Profiler Results")
-        # cli.print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
     else:
         main(out_root)
 
