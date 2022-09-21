@@ -21,7 +21,7 @@ from local.hyperparam_sampling import Sampler, ConstantSampler, ExponentialSampl
 from local.network_models import Classifier
 from local.training_helper import TrainingHelper
 from local.loader import Loader
-from local.tensor_dataset import TensorManager
+from local.datasets import TensorManager
 
 
 # ================ SETTINGS ================ #

@@ -24,7 +24,7 @@ from local.network_models import Net
 from local.training_helper import TrainingHelper
 from local.training import Profiler, Loader
 from local.loader import LimitedLoader
-from local.video_dataset import VideoManager
+from local.datasets import VideoManager
 
 
 # ================ SETTINGS ================ #
