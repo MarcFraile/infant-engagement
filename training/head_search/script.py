@@ -16,8 +16,7 @@ from torch import nn
 import pandas as pd
 from tqdm import trange
 
-from local.cli.pretty_cli import PrettyCli
-from local.cli.cli_helpers import RelabeledCliHelper
+from local.cli import PrettyCli, CliHelper
 from local.hyperparam_sampling import Sampler, ConstantSampler, ExponentialSampler, CategoricalSampler, MixtureSampler
 from local.network_models import Classifier
 from local.training_helper import TrainingHelper
@@ -90,7 +89,7 @@ OUTPUT_ROOT : Path = Path("output/relabeled/head/")
 # CLI pretty-printing and script helper functions
 
 cli = PrettyCli()
-helper = RelabeledCliHelper(cli)
+helper = CliHelper(cli)
 
 
 # ================ FUNCTIONS ================ #

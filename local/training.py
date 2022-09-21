@@ -13,7 +13,7 @@ from torch import nn
 import torch.nn.functional as F
 from torch.optim import Optimizer
 
-from local.cli.pretty_cli import PrettyCli
+from local.cli import PrettyCli
 from local.metrics import confusion as get_conf
 from local.loader import Loader
 

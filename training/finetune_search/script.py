@@ -18,8 +18,7 @@ from torch import nn
 import pandas as pd
 from tqdm import trange
 
-from local.cli.pretty_cli import PrettyCli
-from local.cli.cli_helpers import RelabeledCliHelper, Environment
+from local.cli import PrettyCli, CliHelper, Environment
 from local.hyperparam_sampling import Sampler, ConstantSampler, ExponentialSampler, CategoricalSampler, MixtureSampler
 from local.network_models import Net
 from local.training_helper import TrainingHelper
@@ -148,7 +147,7 @@ DEFAULT_OUTPUT_ROOT = Path("output/relabeled/finetune/")
 # ---- Helpers ---- #
 
 cli = PrettyCli()
-helper = RelabeledCliHelper(cli)
+helper = CliHelper(cli)
 
 
 # ================ METHODS ================ #

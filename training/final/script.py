@@ -14,8 +14,7 @@ import torch
 import pandas as pd
 from matplotlib import pyplot as plt
 
-from local.cli.pretty_cli import PrettyCli
-from local.cli.cli_helpers import Environment, RelabeledCliHelper
+from local.cli import PrettyCli, CliHelper, Environment
 from local.training import FoldMetrics, FoldPack, RunHistory, plot_history_metrics
 from local.network_models import Classifier, Net
 from local.training_helper import TrainingHelper
@@ -129,7 +128,7 @@ OUTPUT_ROOT = Path("output/relabeled/main")
 # ---- Helpers ---- #
 
 cli = PrettyCli()
-helper = RelabeledCliHelper(cli)
+helper = CliHelper(cli)
 
 
 # ================ FUNCTIONS ================ #

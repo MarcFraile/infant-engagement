@@ -10,9 +10,11 @@ import numpy as np
 import torch
 import pandas as pd
 
-from local.cli.pretty_cli import PrettyCli
+from local.cli import PrettyCli
 from local.transforms import get_default_transforms
 from local.util import count_params
+from local.training import TensorMap
+from local.datasets import TensorManager, VideoManager
 
 
 class Environment:
@@ -235,12 +237,7 @@ class CliHelper:
 
         return net
 
-
-class RelabeledCliHelper(CliHelper):
-    def __init__(self, cli: PrettyCli = PrettyCli()):
-        CliHelper.__init__(self, cli)
-
-    def report_tensor_manager(self, feature_root: Path, task: str, variable: str, device: torch.device) -> relabeled.TensorManager:
+    def report_tensor_manager(self, feature_root: Path, task: str, variable: str, device: torch.device) -> TensorManager:
         self.cli.section("K-Folds Tensor Manager")
 
         manager = TensorManager(feature_root, task, variable, device)
