@@ -10,7 +10,7 @@ import numpy as np
 import torch
 import pandas as pd
 
-from local.cli import PrettyCli
+from .pretty_cli import PrettyCli
 from local.transforms import get_default_transforms
 from local.util import count_params
 from local.types import TensorMap
