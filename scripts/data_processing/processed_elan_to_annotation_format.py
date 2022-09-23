@@ -176,6 +176,8 @@ def fill_blanks(cut: pd.DataFrame, task_spans: pd.DataFrame) -> pd.DataFrame:
                     continue
                 task_start, task_end = task_spans.loc[span_key]
                 for variable in VARIABLES.categories:
+                    if variable == "task":
+                        continue
                     current_time = task_start
                     key = (task, session, annotator, variable)
                     if key in indexed.index:
