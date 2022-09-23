@@ -11,6 +11,9 @@
 # * Aggregates all timespans into elan/converted.csv for use with Python + Pandas.
 # * Creates 2-rater comparison tab-delimited files for use with EasyDIAg.
 #
+# (First script in engagement annotation processing; followed by
+# processed_elan_to_annotation_format.py)
+#
 # ===================================================================================== #
 # ===================================================================================== #
 
@@ -30,8 +33,8 @@ from local.cli import PrettyCli
 
 
 EAF_ROOT     = Path("data/raw/engagement/")
-CSV_FILE     = Path("data/processed/engagement/annotation_spans.csv")
-TABFILE_ROOT = Path("data/processed/engagement/tabfiles")
+CSV_FILE     = Path("data/processed/engagement/original_annotation_spans.csv")
+TABFILE_ROOT = Path("data/processed/engagement/easydiag_tabfiles")
 
 PARTICIPATING = "participating"
 ATTENDING     = "attending"
@@ -120,7 +123,7 @@ cli = PrettyCli()
 # ================ FUNCTIONS ================ #
 
 
-def main():
+def process_elan():
     """
     Main function.
 
@@ -364,4 +367,4 @@ def save_tabfiles(data: pd.DataFrame) -> None:
 
 
 if __name__ == "__main__":
-    main()
+    process_elan()
