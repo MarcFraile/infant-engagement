@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/env bash
 
 # Run this from the root folder!
 
 set -o pipefail # Keep the failure status if something fails in a pipe chain.
-POINTER_PATH="artifacts/main/current.txt"
+POINTER_PATH="artifacts/head/current.txt"
 
 function save_log() {
     # If the script lived long enough to set up the pointer, copy the run log to the new output folder.
@@ -22,6 +22,6 @@ trap save_log SIGINT
 rm -f $POINTER_PATH
 
 # Main script
-training/final/script.py $@ > >(tee -a artifacts/temp.log) 2> >(tee -a artifacts/temp.err >&2)
+scripts/training/head_search/script.py $@ > >(tee -a artifacts/temp.log) 2> >(tee -a artifacts/temp.err >&2)
 
 save_log

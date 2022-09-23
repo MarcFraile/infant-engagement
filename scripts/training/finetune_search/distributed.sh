@@ -22,7 +22,7 @@ module purge
 
 BASE_IMG=/apps/containers/PyTorch/PyTorch-1.11-NGC-21.12.sif
 OVERLAY=img/singularity.img
-SCRIPT_FOLDER=training/finetune_search
+SCRIPT_FOLDER=scripts/training/finetune_search
 
 echo "Script folder: $SCRIPT_FOLDER"
 
