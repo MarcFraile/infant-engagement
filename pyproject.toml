@@ -16,6 +16,7 @@ torchvision = "^0.13.1"
 tqdm = "^4.64.1"
 matplotlib = "^3.6.0"
 imageio = "^2.22.0"
+imageio-ffmpeg = "^0.4.7"
 
 
 [build-system]
