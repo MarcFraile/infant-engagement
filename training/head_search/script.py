@@ -20,7 +20,7 @@ from local.cli import PrettyCli, CliHelper
 from local.hyperparam_sampling import Sampler, ConstantSampler, ExponentialSampler, CategoricalSampler, MixtureSampler
 from local.network_models import Classifier
 from local.training_helper import TrainingHelper
-from local.loader import Loader
+from local.types import Loader
 from local.datasets import TensorManager
 
 

@@ -1,4 +1,4 @@
-from typing import Callable, Dict, Optional, List, Any, Protocol, Tuple
+from typing import Dict, Optional, List, Tuple
 from datetime import datetime, timedelta
 from dataclasses import dataclass
 import copy
@@ -15,39 +15,7 @@ from torch.optim import Optimizer
 
 from local.cli import PrettyCli
 from local.metrics import confusion as get_conf
-from local.loader import Loader
-
-
-# ================ Types ================ #
-
-
-Profiler    = torch.profiler.profile
-TensorMap   = Callable[[Tensor], Tensor]
-TensorBimap = Callable[[Tensor, Tensor], Tensor]
-
-class Scheduler(Protocol):
-    def get_last_lr(self) -> List[Any]: # TODO: Refine this further.
-        pass
-
-    def step(self) -> None:
-        pass
-
-
-class DummyScheduler:
-    """
-    Testing utility. Always returns the same learning rate (specified in constructor).
-    """
-    def __init__(self, lr: float):
-        self.lr = lr
-
-    def get_last_lr(self) -> List[Any]:
-        return [self.lr]
-
-    def step(self) -> None:
-        pass
-
-
-# ================ Contents ================ #
+from local.types import Profiler, TensorMap, TensorBimap, Loader, Scheduler
 
 
 def freeze(model: nn.Module) -> None:

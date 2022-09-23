@@ -12,7 +12,8 @@ from torch import Tensor
 from torch.utils.data import Dataset
 from torch.utils.data.dataloader import DataLoader
 
-from local.training import KFoldsManager, TensorMap
+from local.types import TensorMap
+from local.training import KFoldsManager
 
 
 @dataclass

@@ -13,7 +13,7 @@ import pandas as pd
 from local.cli import PrettyCli
 from local.transforms import get_default_transforms
 from local.util import count_params
-from local.training import TensorMap
+from local.types import TensorMap
 from local.datasets import TensorManager, VideoManager
 
 

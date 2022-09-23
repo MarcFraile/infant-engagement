@@ -6,7 +6,7 @@ import torch
 from torchvision import transforms
 from torchvision.transforms import InterpolationMode
 
-from local.training import TensorMap
+from local.types import TensorMap
 from local.util import remap
 
 class NormalNoise:

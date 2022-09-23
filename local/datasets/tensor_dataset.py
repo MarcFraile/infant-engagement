@@ -6,7 +6,7 @@ import torch
 from torch import Tensor
 
 from local.training import KFoldsManager
-from local.loader import DummyLoader
+from local.types import DummyLoader
 
 
 @dataclass

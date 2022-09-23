@@ -7,8 +7,9 @@ from torch import Tensor, optim, nn
 import pandas as pd
 
 from local.cli import PrettyCli
-from local.loader import Loader
-from local.training import MCELL2Loss, RunHistory, Scheduler, TensorMap, TensorBimap, train
+from local.types import Loader
+from local.types import Scheduler, TensorMap, TensorBimap
+from local.training import MCELL2Loss, RunHistory, train
 from local.metrics import acc_from_conf, f1, balanced_accuracy
 
 

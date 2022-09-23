@@ -22,8 +22,7 @@ from local.cli import PrettyCli, CliHelper, Environment
 from local.hyperparam_sampling import Sampler, ConstantSampler, ExponentialSampler, CategoricalSampler, MixtureSampler
 from local.network_models import Net
 from local.training_helper import TrainingHelper
-from local.training import Profiler, Loader
-from local.loader import LimitedLoader
+from local.types import Profiler, Loader, LimitedLoader
 from local.datasets import VideoManager
 
 
