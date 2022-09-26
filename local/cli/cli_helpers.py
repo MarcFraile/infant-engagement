@@ -211,6 +211,15 @@ class CliHelper:
 
         return (start_time, output_path)
 
+    def report_net(self, net: torch.nn.Module) -> None:
+        """
+        Prints the total number of parameters, and the parameters per layer, of a net.
+        """
+        self.cli.print({
+            "Total Parameters": count_params(net),
+            "Parameters per Layer": { type(layer).__name__ : count_params(layer) for layer in net.children() },
+        })
+
     def load_pickled_net(self, path: Path, gpu: Optional[torch.device] = None, section: Optional[str] = None) -> torch.nn.Module:
         """
         Loads a net from `path`.
@@ -229,12 +238,7 @@ class CliHelper:
             net = net.to(gpu)
         net.eval()
 
-        params = {
-            "Total Parameters": count_params(net),
-            "Parameters per Layer": { type(layer).__name__ : count_params(layer) for layer in net.children() },
-        }
-        self.cli.print(params)
-
+        self.report_net(net)
         return net
 
     def report_tensor_manager(self, feature_root: Path, task: str, variable: str, device: torch.device) -> TensorManager:
