@@ -208,7 +208,7 @@ def split_sessions(sessions: List[str], annotations: pd.DataFrame) -> Tuple[List
             fold_index = annotations.index.get_level_values("session").isin(folds[k])
             fold_annotations = annotations[fold_index]
 
-            fold_probabilities = { task: {variable: get_empirical_prob(fold_annotations.loc[task]) for variable in VARIABLES } for task in TASKS }
+            fold_probabilities = { task: {variable: get_empirical_prob(fold_annotations.loc[task, variable]) for variable in VARIABLES } for task in TASKS }
             fold_video_count = len(fold_annotations.index.get_level_values("session").unique())
 
             probabilities[k] = fold_probabilities

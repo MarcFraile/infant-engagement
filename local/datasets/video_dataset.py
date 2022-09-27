@@ -315,7 +315,7 @@ class VideoManager(KFoldsManager):
 
         entry = stats["stats"][k]
 
-        empirical_probability = float(entry["empirical_probability"][self.task])
+        empirical_probability = float(entry["empirical_probability"][self.task][self.variable])
         pixel_mean = torch.tensor(entry["pixel_values"]["mean"])
         pixel_std  = torch.tensor(entry["pixel_values"]["std" ])
 
@@ -334,12 +334,13 @@ class VideoManager(KFoldsManager):
                 meta   = file.metadata(exclude_applied=False)
 
             assert (len(frames.shape) == 4) and (frames.shape[3] == 3) # THWC
-            assert ("fps" in meta) and (type(meta["fps"]) == float) and (meta["fps"] > 0)
 
-            frames = torch.tensor(frames)
-            frames = frames.permute(3, 0, 1, 2).float() # THWC => CTHW
+            frames = torch.tensor(frames).float() # THWC
             frames = (frames - pixel_mean) / pixel_std
+            frames = frames.permute(3, 0, 1, 2) # THWC => CTHW
             frames = frames.contiguous()
+
+            assert ("fps" in meta) and (type(meta["fps"]) == float) and (meta["fps"] > 0)
 
             fps = meta["fps"]
             if self._fps < 0: # Signal value.

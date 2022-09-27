@@ -7,12 +7,13 @@ class Encoder(nn.Module):
     """
     Encoder for Net, provided by `torchvision.models`.
 
-    * Mixed-convolutions model (mc3_18), pretrained.
+    * Mixed-convolutions model (`mc3_18`), pretrained on Kinetics 400.
     """
 
     def __init__(self):
         super().__init__()
-        self.base_model = models.video.mc3_18(pretrained=True)
+        weights = models.video.MC3_18_Weights.KINETICS400_V1
+        self.base_model = models.video.mc3_18(weights=weights)
         self.base_model.fc = nn.Identity()
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
