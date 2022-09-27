@@ -4,6 +4,18 @@ Code for the article "End-to-End Learning and Analysis of Infant Engagement Duri
 
 ## Reproducing the Work
 
+### Installing
+
+This project uses [Poetry](https://python-poetry.org/) for version control. Follow the official installation instructions, and then run this command from the repository's top-level directory:
+
+```
+poetry install
+```
+
+*__Note:__ Currently, [PyTorch doesn't play nice with Poetry](https://github.com/python-poetry/poetry/issues/6409). The `pyproject.toml` file contains a workaround that only works for 64-bit Linux using Python3.8. If you use a different system, fix the URL according to your needs.*
+
+### Processing Data
+
 *__Note:__ For data protection reasons, we cannot freely share the original videos, or the associated annotation files.*
 
 Assuming you have access to the source material, it should be stored in the following folder structure:
