@@ -28,7 +28,7 @@ echo "Script folder: $SCRIPT_FOLDER"
 
 # Create the output folder as an ISO-8601 timestamp.
 TIMESTAMP=$(date +"%Y%m%dT%k%M%S")
-OUTPUT_ROOT=artifacts/finetune/$TIMESTAMP
+OUTPUT_ROOT=artifacts/finetune_search/$TIMESTAMP
 LOGDIR=$OUTPUT_ROOT/log
 
 echo "Output dir: $OUTPUT_ROOT"

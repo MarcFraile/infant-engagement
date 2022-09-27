@@ -74,7 +74,7 @@ CURRENT_SCRIPT  : Path # Book-keeping.
 
 INPUT_DIRS = {
     "CWD"          : CWD,
-    "FEATURE_ROOT" : Path("preprocessed/relabeled/"),
+    "FEATURE_ROOT" : Path("data/processed/baked_samples/"),
 }
 
 INPUT_FILES = {
@@ -84,7 +84,7 @@ INPUT_FILES = {
 locals().update(INPUT_DIRS)
 locals().update(INPUT_FILES)
 
-OUTPUT_ROOT : Path = Path("output/relabeled/head/")
+OUTPUT_ROOT : Path = Path("artifacts/head_search/")
 
 # CLI pretty-printing and script helper functions
 

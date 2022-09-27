@@ -3,7 +3,7 @@
 # Run this from the root folder!
 
 set -o pipefail # Keep the failure status if something fails in a pipe chain.
-POINTER_PATH="artifacts/finetune/current.txt"
+POINTER_PATH="artifacts/finetune_search/current.txt"
 
 function save_log() {
     # If the script lived long enough to set up the pointer, copy the run log to the new output folder.

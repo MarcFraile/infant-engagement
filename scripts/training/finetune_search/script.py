@@ -128,20 +128,20 @@ STATS_FILE      : Path # Load fold sample statistics from this file.
 
 INPUT_DIRS = {
     "CWD"        : CWD,
-    "VIDEO_ROOT" : Path("video/relabeled/"),
-    "HEAD_ROOT"  : Path(f"output/relabeled/head/{HEAD_RUN}"),
+    "VIDEO_ROOT" : Path("data/processed/video/"),
+    "HEAD_ROOT"  : Path(f"artifacts/head_search/{HEAD_RUN}"),
 }
 
 INPUT_FILES = {
     "CURRENT_SCRIPT"  : Path(__file__).resolve().relative_to(CWD),
-    "ANNOTATION_FILE" : Path("annotation/elan/folds.csv"),
-    "STATS_FILE"      : Path("annotation/elan/stats.json")
+    "ANNOTATION_FILE" : Path("data/processed/engagement/stratified_annotation_spans.csv"),
+    "STATS_FILE"      : Path("data/processed/fold_statistics.json")
 }
 
 locals().update(INPUT_DIRS)
 locals().update(INPUT_FILES)
 
-DEFAULT_OUTPUT_ROOT = Path("output/relabeled/finetune/")
+DEFAULT_OUTPUT_ROOT = Path("artifacts/finetune_search/")
 
 # ---- Helpers ---- #
 
