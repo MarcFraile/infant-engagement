@@ -40,3 +40,13 @@ To train, you need to run the following scripts in the correct order. *Always ru
 * To prepare the videos for training, run `scripts/data_processing/process_videos.py`. It reads MP4 files in `data/raw/video/`, and outputs downsampled copies to `data/processed/video/`.
 * Once the CSV annotations and MP4 videos have been generated, run `scripts/data_processing/stratify_samples.py` in order stratify all samples into evenly-distributed folds. This will generate `data/processed/engagement/stratified_annotation_spans.csv` as a binarized, fold-separated annotation file; and `data/processed/fold_statistics.json` as a summary of empirical probabilities, pixel means and deviations, and which sessions belong to each fold.
 * To pre-bake samples for training the classification head, run `scripts/data_processing/bake_samples.py`. It will save tensor packs to `data/processed/baked_samples/`, separated by fold and type of data augmentation (`train` or `test`). The training fold (last fold) only gets `test` augmentation.
+
+### Training Networks
+
+There are three training scripts: two for hyper-parameter searches (classifier head training vs. whole-network fine-tuning), and one for the final training. Each is contained in a folder in `scripts/training/`. You can run them locally in a CUDA-accelerated machine with enough RAM by calling the respective `local.sh` script. It is highly recommended that you run the fine-tuning search in a GPU cluster; `jobfile.sh` handles this for SLURM systems.
+
+All the scripts are designed to create timestamped folders under `artifacts/<training type>/`, containing all relevant artifacts (pickled models, run statistics, logs...)
+
+* To perform a hyper-parameter search for the *classifier head* training, run `scripts/training/head_search/local.sh`. Artifacts are saved in `artifacts/head_search/`.
+* To perform a hyper-parameter search for the *fine-tuning* step, run `scripts/training/finetune_search/local.sh`. Artifacts are saved in `artifacts/finetune_search/`.
+* To perform the final training, run `scripts/training/final/local.sh`. Artifacts are saved in `artifacts/final/`.
