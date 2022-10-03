@@ -2,6 +2,10 @@
 
 data/
 
+# Artifacts are big
+
+artifacts/
+
 # Python & VS Code
 
 __pycache__/
@@ -12,10 +16,9 @@ __pycache__/
 
 # ELAN
 
-elan/*.pfsx
+*.pfsx
 
 # Other
 
 scratch/
 .swp
-runs/
