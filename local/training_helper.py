@@ -1,5 +1,5 @@
 from dataclasses import dataclass, asdict
-from typing import Any, Optional, Dict
+from typing import Any, Optional, Dict, List
 
 import torch
 from torch import Tensor, optim, nn
@@ -21,6 +21,7 @@ class TrainingHelper:
     * Call `train()` as a managed wrapper to `e2e.babylab.folds.training.train()`.
     * Call `get_stats()` to obtain a `DataFrame` containing the metrics for the best (or last) run, among other data.
     """
+
     @dataclass
     class Meta:
         """Data needed by the training process that is not considered a hyper-parameter."""
@@ -58,6 +59,11 @@ class TrainingHelper:
         train : Loader
         val   : Optional[Loader] = None
         test  : Optional[Loader] = None
+
+    @staticmethod
+    def param_names() -> List[str]:
+        """Return the names of all parameters in a `TrainingHelper.Params` pack, including optional parameters."""
+        return [ key for key in TrainingHelper.Params.__dataclass_fields__ ]
 
     net    : nn.Module
     meta   : Meta
