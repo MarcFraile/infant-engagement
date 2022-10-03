@@ -4,10 +4,8 @@
 # ================ IMPORTS ================ #
 
 
-from dataclasses import dataclass, asdict
 import sys, os
 from pathlib import Path
-from datetime import datetime
 import copy
 from typing import Tuple, Optional
 import warnings
@@ -24,6 +22,8 @@ from local.network_models import Net
 from local.training_helper import TrainingHelper
 from local.types import Profiler, Loader, LimitedLoader
 from local.datasets import VideoManager
+from local import search
+from local.search import SearchResults
 
 
 # ================ SETTINGS ================ #
@@ -169,23 +169,15 @@ def main(output_root: Optional[Path] = None, profiler: Optional[Profiler] = None
 
     manager = helper.report_video_manager(VIDEO_ROOT, ANNOTATION_FILE, STATS_FILE, TASK, VARIABLE, SNIPPET_DURATION, SNIPPET_SUBDIVISION, BATCH_SIZE, NUM_WORKERS, VERBOSE)
     head = helper.load_pickled_net(HEAD_ROOT / "best_net.pt")
-    # head_params = report_head_params() # TODO: Check if needed
 
     results = search_params(gpu, head, manager, env, profiler)
 
-    report_results(out_path, start_time, results)
     torch.save(results.best_net, out_path / "best_net.pt")
+    search.report_results(out_path, start_time, results)
+    search.stats_and_plots(out_path, results.stats)
 
 
-@dataclass
-class SearchResults:
-    best_avg_val_f1 : float
-    best_params     : TrainingHelper.Params
-    best_net        : nn.Module
-    stats           : pd.DataFrame
-
-
-def search_params(gpu: torch.device, head: nn.Module, manager: VideoManager, env: Environment, profiler: Optional[Profiler]) -> SearchResults:
+def search_params(gpu: torch.device, head: nn.Module, manager: VideoManager, env: Environment, profiler: Optional[Profiler]) -> search.SearchResults:
     """
     * For every combination of hyperparameters, run k-folds validation.
     * The k-folds validation step train_with_params() returns the best net for that set of params, based on (individual fold) validation F1 score.
@@ -213,12 +205,13 @@ def search_params(gpu: torch.device, head: nn.Module, manager: VideoManager, env
     else:
         attempts = SAMPLES
 
-    for sample in trange(attempts, desc="Hyper-Param"):
+    for _ in trange(attempts, desc="Hyper-Param"):
         params = TrainingHelper.Params(LR_INIT(), LR_DECAY(), WEIGHT_DECAY(), USE_CLASS_WEIGHTS())
         best_param_net, param_stats = train_with_params(gpu, head, manager, params, profiler)
 
         avg_param_val_f1 = param_stats["validation_f1"].mean()
-        stats = pd.concat([stats, param_stats])
+        param_stats["average_validation_f1"] = avg_param_val_f1
+        stats = pd.concat([stats, param_stats], ignore_index=True)
 
         if avg_param_val_f1 > best_avg_val_f1:
             best_avg_val_f1 = avg_param_val_f1
@@ -231,7 +224,7 @@ def search_params(gpu: torch.device, head: nn.Module, manager: VideoManager, env
 def train_with_params(gpu: torch.device, head: nn.Module, manager: VideoManager, params: TrainingHelper.Params, profiler: Optional[Profiler]) -> Tuple[nn.Module, pd.DataFrame]:
 
     param_stats : pd.DataFrame = pd.DataFrame()
-    best_val    : float        = -1.0
+    best_val    : float        = float("-inf")
     best_net    : nn.Module
 
     train_loader : Loader
@@ -276,39 +269,6 @@ def train_with_params(gpu: torch.device, head: nn.Module, manager: VideoManager,
                 best_net = hist.best_net
 
     return best_net, param_stats
-
-
-def report_results(out_path: Path, start_time: datetime, search_results: SearchResults) -> None:
-    """
-    Report durations and basic training statistics.
-    """
-
-    stats = search_results.stats
-
-    end_time = datetime.now()
-    elapsed = end_time - start_time
-
-    stats.to_csv(out_path / "stats.csv", index=False)
-
-    summary = {
-        "General": {
-            "Started"      : start_time,
-            "Ended"        : end_time,
-            "Total_Time"   : str(elapsed),
-            "Time_per_Rep" : stats["duration"].describe().to_dict(),
-            "F1" : {
-                "Train"      : stats["train_f1"     ].describe().to_dict(),
-                "Validation" : stats["validation_f1"].describe().to_dict(),
-                "Test"       : stats["test_f1"      ].describe().to_dict(),
-            },
-        },
-        "Best_Avg_Val_F1" : search_results.best_avg_val_f1,
-        "Best_Params"     : asdict(search_results.best_params),
-    }
-
-    cli.section("Final Results")
-    cli.print(summary)
-    helper.json_write(summary, out_path / "results.json")
 
 
 # ================ KICKSTART ================ #
