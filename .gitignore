@@ -2,9 +2,10 @@
 
 data/
 
-# Artifacts are big
+# Big files
 
 artifacts/
+img/
 
 # Python & VS Code
 
