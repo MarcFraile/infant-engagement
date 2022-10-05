@@ -50,3 +50,7 @@ All the scripts are designed to create timestamped folders under `artifacts/<tra
 * To perform a hyper-parameter search for the *classifier head* training, run `scripts/training/head_search/local.sh`. Artifacts are saved in `artifacts/head_search/`.
 * To perform a hyper-parameter search for the *fine-tuning* step, run `scripts/training/finetune_search/local.sh`. Artifacts are saved in `artifacts/finetune_search/`.
 * To perform the final training, run `scripts/training/final/local.sh`. Artifacts are saved in `artifacts/final/`.
+
+### Using the Distributed Code
+
+The distributed code assumes you have access to a GPU cluster that uses SLURM for job management and Singularity for containerization. To run `training/finetune_search/jobfile.sh` or `training/finetune_search/distributed.sh`, you need to create a directory named `img/` at the top level of this repository, and create an image inside it. The image should have the dependencies listed in `pyproject.toml` / `poetry.lock`.

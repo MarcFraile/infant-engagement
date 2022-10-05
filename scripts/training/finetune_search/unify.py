@@ -8,6 +8,8 @@ import json
 
 import pandas as pd
 
+from local import search
+
 
 def main():
     if len(sys.argv) != 2:
@@ -48,6 +50,8 @@ def main():
 
     data.to_csv(out_root / "stats.csv", index=False)
     shutil.copy(best_task / "best_net.pt", out_root / "best_net.pt")
+
+    search.stats_and_plots(out_root, data)
 
 
 if __name__ == "__main__":

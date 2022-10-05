@@ -21,8 +21,9 @@
 
 module purge
 
-BASE_IMG=/apps/containers/PyTorch/PyTorch-1.11-NGC-21.12.sif
+POETRY=~/.local/bin/poetry
+BASE_IMG=/apps/containers/PyTorch/PyTorch-1.12-NGC-22.05.sif
 OVERLAY=img/singularity.img
 SCRIPT=scripts/training/finetune_search/script.py
 
-singularity exec --overlay $OVERLAY:ro $BASE_IMG python3 $SCRIPT $1
+singularity exec --overlay $OVERLAY:ro $BASE_IMG $POETRY run $SCRIPT $1

@@ -20,7 +20,8 @@
 
 module purge
 
-BASE_IMG=/apps/containers/PyTorch/PyTorch-1.11-NGC-21.12.sif
+POETRY=~/.local/bin/poetry
+BASE_IMG=/apps/containers/PyTorch/PyTorch-1.12-NGC-22.05.sif
 OVERLAY=img/singularity.img
 SCRIPT_FOLDER=scripts/training/finetune_search
 
@@ -40,7 +41,7 @@ echo "Running job array..."
 CHILD_ID=$(sbatch --wait $SCRIPT_FOLDER/jobfile.sh $OUTPUT_ROOT | tr -dc '0-9')
 
 echo "Unifying..."
-singularity exec --overlay $OVERLAY:ro $BASE_IMG python3 $SCRIPT_FOLDER/unify.py $OUTPUT_ROOT
+singularity exec --overlay $OVERLAY:ro $BASE_IMG $POETRY run $SCRIPT_FOLDER/unify.py $OUTPUT_ROOT
 
 echo "Moving child logs..."
 mv log/worker-${CHILD_ID}_* $LOGDIR

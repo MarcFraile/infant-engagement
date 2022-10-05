@@ -108,7 +108,7 @@ def main():
     results = train_head(gpu, manager)
 
     torch.save(results.best_net, out_path / "best_net.pt")
-    search.report_results(out_path, start_time, results)
+    search.report_results(helper, out_path, start_time, results)
     search.stats_and_plots(out_path, results.stats)
 
 

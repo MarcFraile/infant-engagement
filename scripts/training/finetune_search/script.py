@@ -156,10 +156,13 @@ def main(output_root: Optional[Path] = None, profiler: Optional[Profiler] = None
     cli.main_title(F'FINE-TUNING: "{TASK}"\nHYPERPARAMETER SEARCH')
 
     add_timestamp : bool
+    report_plots  : bool
     if output_root:
         add_timestamp = False
+        report_plots  = False
     else:
         add_timestamp = True
+        report_plots  = True
         output_root = DEFAULT_OUTPUT_ROOT
 
     env = helper.report_environment()
@@ -173,8 +176,9 @@ def main(output_root: Optional[Path] = None, profiler: Optional[Profiler] = None
     results = search_params(gpu, head, manager, env, profiler)
 
     torch.save(results.best_net, out_path / "best_net.pt")
-    search.report_results(out_path, start_time, results)
-    search.stats_and_plots(out_path, results.stats)
+    search.report_results(helper, out_path, start_time, results)
+    if report_plots:
+        search.stats_and_plots(out_path, results.stats)
 
 
 def search_params(gpu: torch.device, head: nn.Module, manager: VideoManager, env: Environment, profiler: Optional[Profiler]) -> search.SearchResults:
