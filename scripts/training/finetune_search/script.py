@@ -64,12 +64,13 @@ USE_CLASS_WEIGHTS : Sampler[bool]
 #     "SCRIPT_PARAMS" : {
 #         "TASK"     : "people",
 #         "VARIABLE" : "participating",
-#         "HEAD_RUN" : "20220326T124239",
+#         "HEAD_RUN" : "20220928T102729",
 
-#         "EPOCHS"              : 4,
-#         "SAMPLES"             : 10,
+#         "EPOCHS"              : 2,
+#         "SAMPLES"             : 5,
 #         "SNIPPET_DURATION"    : 5.0,
 #         "SNIPPET_SUBDIVISION" : 10,
+#         "REPETITIONS"         : 2,
 
 #         "BATCH_SIZE"  : 16,
 #         "NUM_WORKERS" : 8,
@@ -89,7 +90,7 @@ RUN_PARAMS = { # "Prod" params
     "SCRIPT_PARAMS" : {
         "TASK"     : "people",
         "VARIABLE" : "participating",
-        "HEAD_RUN" : "20220326T124239",
+        "HEAD_RUN" : "20220928T102729",
 
         "EPOCHS"              : 100,
         "SAMPLES"             : 150,
