@@ -54,3 +54,8 @@ All the scripts are designed to create timestamped folders under `artifacts/<tra
 ### Using the Distributed Code
 
 The distributed code assumes you have access to a GPU cluster that uses SLURM for job management and Singularity for containerization. To run `training/finetune_search/jobfile.sh` or `training/finetune_search/distributed.sh`, you need to create a directory named `img/` at the top level of this repository, and create an image inside it. The image should have the dependencies listed in `pyproject.toml` / `poetry.lock`.
+
+### Human Attention Annotations
+
+* To choose snippets to paint, run `scripts/human_attention/choose_snippets.py`. This procedure uses rejection sampling to ensure good properties on the selected samples.
+* To paint your own annotations on the chosen snippets, run the notebook `scripts/human_attention/annotator.ipynb`.
