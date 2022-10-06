@@ -45,13 +45,14 @@ VIDEO_ROOT      = Path("data/processed/video/")
 ANNOTATION_FILE = Path("data/processed/engagement/stratified_annotation_spans.csv")
 STATS_FILE      = Path("data/processed/fold_statistics.json")
 
+OUTPUT_ROOT = Path("data/processed/human_attention/")
+OUTPUT_FILE = OUTPUT_ROOT / "candidate_snippets.csv"
+
 SAMPLE_DURATION_S = 5.0
 SUBDIVISION       = 10
 
 TRIALS           = 10_000
 EXPECTED_SAMPLES = 1
-# ANNOTATORS       = [ "ew"  , "mf"  , "myz"  ]
-# SESSIONS         = [ "fp34", "fp14", "fp25" ]
 
 cli = PrettyCli()
 
@@ -76,7 +77,10 @@ def choose_snippets() -> None:
     cli.main_title("Choose Snippets")
     annotator_session_pairs = get_annotator_session_pairs()
     candidate_snippets = pairs_to_snippets(annotator_session_pairs)
-    candidate_snippets.to_csv("annotation/attention_painting/candidate_snippets.csv", index=False)
+
+    if not OUTPUT_ROOT.is_dir():
+        OUTPUT_ROOT.mkdir(parents=True, exist_ok=False)
+    candidate_snippets.to_csv(OUTPUT_FILE, index=False)
 
 
 def get_annotator_session_pairs() -> Dict[str, str]:
