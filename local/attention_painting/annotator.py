@@ -13,9 +13,10 @@ from matplotlib.backend_bases import MouseEvent, MouseButton
 from matplotlib.patches import Circle
 
 import ipywidgets as widgets
-from painting import gaussian_kernel, add_template
 
-from timer import MakeTimer
+from .painting import gaussian_kernel, add_template
+from .timer import MakeTimer
+from local.cli.cli_helpers import json_default
 
 
 FULL_WIDTH  = widgets.Layout(width="100%")
@@ -183,10 +184,12 @@ class Annotator:
         label_chooser     = self.assemble_label_chooser()
         file_controls     = self.assemble_file_controls()
 
-        self.widget = widgets.VBox(
+        _widget = widgets.VBox(
             [plot, slider, playback_controls, paint_controls, label_chooser, file_controls],
             layout=CONTAINER
         )
+
+        self.widget = widgets.VBox([ _widget, self.out ])
 
         self.redraw()
 
@@ -365,7 +368,7 @@ class Annotator:
         }
 
         with open(path / "info.json", "w") as file:
-            json.dump(info, file, indent=4)
+            json.dump(info, file, indent=4, default=json_default)
 
         np.save(path / "heatmap.npy", self.heatmap)
 
@@ -446,9 +449,8 @@ class Annotator:
         self.redraw()
 
 
-    def display(self) -> None:
+    def display(self) -> widgets.Widget:
         if self.widget == None:
             self.assemble_widget()
 
-        display(self.widget)
-        display(self.out)
+        return self.widget
