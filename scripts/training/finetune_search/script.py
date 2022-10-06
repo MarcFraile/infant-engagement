@@ -96,7 +96,7 @@ RUN_PARAMS = { # "Prod" params
         "SAMPLES"             : 150,
         "SNIPPET_DURATION"    : 5.0,
         "SNIPPET_SUBDIVISION" : 10,
-        "REPETITIONS"         : 5,
+        "REPETITIONS"         : 4,
 
         "BATCH_SIZE"  : 16,
         "NUM_WORKERS" : 8,

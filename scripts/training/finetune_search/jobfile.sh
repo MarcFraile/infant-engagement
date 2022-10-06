@@ -14,9 +14,9 @@
 #SBATCH -e log/worker-%A_%a.err
 #SBATCH -o log/worker-%A_%a.log
 
-#SBATCH -t 0-12:00:00
+#SBATCH -t 1-00:00:00
 #SBATCH --gpus-per-node=A40:1
-#SBATCH --array=0-149
+#SBATCH --array=0-74
 
 
 module purge

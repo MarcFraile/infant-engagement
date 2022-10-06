@@ -14,7 +14,7 @@
 #SBATCH -e log/master-%A.err
 #SBATCH -o log/master-%A.log
 
-#SBATCH -t 0-12:15:00
+#SBATCH -t 1-01:00:00
 #SBATCH --gpus-per-node=T4:1
 
 
