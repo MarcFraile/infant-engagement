@@ -37,6 +37,7 @@ To train, you need to run the following scripts in the correct order. *Always ru
     2. `scripts/data_processing/processed_elan_to_annotation_format.py` processes `data/processed/engagement/original_annotation_spans.csv` into a training-ready format, saved as `data/processed/engagement/filled_annotation_spans.csv`.
 * To prepare the videos for training, run `scripts/data_processing/process_videos.py`. It reads MP4 files in `data/raw/video/`, and outputs downsampled copies to `data/processed/video/`.
 * Once the CSV annotations and MP4 videos have been generated, run `scripts/data_processing/stratify_samples.py` in order stratify all samples into evenly-distributed folds. This will generate `data/processed/engagement/stratified_annotation_spans.csv` as a binarized, fold-separated annotation file; and `data/processed/fold_statistics.json` as a summary of empirical probabilities, pixel means and deviations, and which sessions belong to each fold.
+* To generate baseline statistics (overall empirical probability for the positive class, best random accuracy, best random F1 score) per `(task, variable)` pair, run `scripts/data_processing/calculate_metric_baselines.py`. It stores the results in `data/processed/metric_baselines.json`.
 * To pre-bake samples for training the classification head, run `scripts/data_processing/bake_samples.py`. It will save tensor packs to `data/processed/baked_samples/`, separated by fold and type of data augmentation (`train` or `test`). The training fold (last fold) only gets `test` augmentation.
 
 ## Training Networks
