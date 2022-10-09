@@ -57,9 +57,10 @@ The distributed code assumes you have access to a GPU cluster that uses SLURM fo
 
 ## Human Attention Annotations
 
-* To choose snippets to paint, run `scripts/human_attention/choose_snippets.py`. This procedure uses rejection sampling to ensure good properties on the selected samples.
-* To paint your own annotations on the chosen snippets, run the notebook `scripts/human_attention/annotator.ipynb`.
+* To choose snippets to paint, run `scripts/human_attention/choose_snippets.py`. This procedure chooses samples from the test set that have not been previously labeled by the annotator that will paint the attention map. It uses rejection sampling to ensure good properties on the selected samples. The chosen snippets are refered to as the *comparison set*, since they are used later on for human-machine attention comparisons.
+* To paint your own annotations on the comparison set, run the notebook `scripts/human_attention/annotator.ipynb`.
 
 ## Machine Attention Calculation
 
-To calculate a selection of post-hoc machine attention methods on the chosen comparison snippets (see [Human Attention Annotations](#human-attention-annotations)), first create the snippets as described, and then run `scripts/machine_attention/calculate_machine_attention.py`.
+* To calculate a selection of post-hoc machine attention methods on the comparison set (see [Human Attention Annotations](#human-attention-annotations)), first create the snippets as described, and then run `scripts/machine_attention/calculate_machine_attention.py`.
+* To compare the human attention annotations vs. the machine attention maps, use `scripts/attention_comparison/calculate_similarity_metrics.py`. This uses a selection of comparison methods (based on previous literature) to evaluate the human-likeness of the machine attention maps on the comparison set.
