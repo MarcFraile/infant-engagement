@@ -107,6 +107,7 @@ VIDEO_ROOT      : Path # Load vids from this directory.
 FEATURE_ROOT    : Path # Load pre-computed encoded samples from this directory.
 ANNOTATION_FILE : Path # Load annotations from this file.
 STATS_FILE      : Path # Load fold sample statistics from this file.
+BASELINES_FILE  : Path # Load "best random classifier" baseline stats (based on empirical probability) from this file.
 
 INPUT_DIRS = {
     "CWD"          : CWD,
@@ -117,7 +118,8 @@ INPUT_DIRS = {
 INPUT_FILES = {
     "CURRENT_SCRIPT"  : Path(__file__).resolve().relative_to(CWD),
     "ANNOTATION_FILE" : Path("data/processed/engagement/stratified_annotation_spans.csv"),
-    "STATS_FILE"      : Path("data/processed/fold_statistics.json")
+    "STATS_FILE"      : Path("data/processed/fold_statistics.json"),
+    "BASELINES_FILE"  : Path("data/processed/metric_baselines.json"),
 }
 
 locals().update(INPUT_DIRS)
@@ -250,8 +252,14 @@ def get_hist_report(hist: RunHistory) -> dict:
 
 
 def save_figs(fig_path: Path, hist: RunHistory, prefix: str) -> None:
+    baselines = {}
+    if BASELINES_FILE.is_file():
+        file_contents = helper.json_read(BASELINES_FILE)
+        baselines = { key[:-9]: value for (key, value) in file_contents[TASK][VARIABLE].items() if key.endswith("_baseline") }
+        baselines["balanced_accuracy"] = 0.5 # NOTE: Under the assumption of independence, this does not depend on the "random classifier".
+
     fig_path.mkdir(parents=False, exist_ok=True)
-    for (name, fig) in plot_history_metrics(hist).items():
+    for (name, fig) in plot_history_metrics(hist, baselines).items():
         fig.savefig(fig_path / f"{prefix}_{name}")
         plt.close(fig)
 

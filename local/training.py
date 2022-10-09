@@ -184,7 +184,17 @@ class RunHistory:
     smoothed_metrics : FoldPack
 
 
-def _get_figure(name: str, train: Tensor, val: Optional[Tensor] = None, test: Optional[Tensor] = None, best_epoch: Optional[int] = None) -> Figure:
+def _get_figure(name: str, train: Tensor, val: Optional[Tensor] = None, test: Optional[Tensor] = None, best_epoch: Optional[int] = None, baseline: Optional[float] = None) -> Figure:
+    """
+    Returns a figure showing the train (mandatory), validation (optional), and test (optional) histories for a given metric.
+
+    * `train`, `val`, and `test` expected to be 1D tensors of the same length, which corresponds to the number of epochs.
+    * The x axis is always the epochs.
+    * `name` is used as the y label.
+    * If given, `best_epoch` is represented as a vertical solid red line at the given x location.
+    * If given, `baseline` is represented as a horizontal dashed gray line at the given y location.
+    """
+
     assert len(train) > 0
     assert (val  is None) or (len(val ) == len(train))
     assert (test is None) or (len(test) == len(train))
@@ -192,6 +202,10 @@ def _get_figure(name: str, train: Tensor, val: Optional[Tensor] = None, test: Op
     x = range(len(train))
     fig = plt.figure()
     legend = []
+
+    if baseline is not None:
+        plt.axhline(baseline, color="gray", linestyle="--")
+        legend.append("baseline")
 
     if best_epoch is not None:
         plt.axvline(x=best_epoch, color="red")
@@ -215,9 +229,9 @@ def _get_figure(name: str, train: Tensor, val: Optional[Tensor] = None, test: Op
     return fig
 
 
-def plot_metric(pack: FoldPack, metric: str, best_epoch: Optional[int] = None) -> Figure:
+def plot_metric(pack: FoldPack, metric: str, best_epoch: Optional[int] = None, baseline: Optional[float] = None) -> Figure:
     """
-    Returns a figure showing the train, validation and test histories for the given metric.
+    Returns a figure showing the train, validation, and test histories for the given metric.
     """
     assert metric in pack.train.metrics
     return _get_figure(
@@ -226,10 +240,14 @@ def plot_metric(pack: FoldPack, metric: str, best_epoch: Optional[int] = None) -
         pack.val  .metrics[metric] if pack.val  else None,
         pack.test .metrics[metric] if pack.test else None,
         best_epoch,
+        baseline,
     )
 
 
 def plot_loss(pack: FoldPack) -> Figure:
+    """
+    Returns a figure showing the train, validation, and test loss histories.
+    """
     return _get_figure(
         "loss",
         pack.train.loss,
@@ -238,21 +256,25 @@ def plot_loss(pack: FoldPack) -> Figure:
     )
 
 
-def plot_pack_metrics(pack: FoldPack, best_epoch: Optional[int] = None) -> Dict[str, Figure]:
+def plot_pack_metrics(pack: FoldPack, best_epoch: Optional[int] = None, baselines: Optional[Dict[str, float]] = None) -> Dict[str, Figure]:
     """
     Returns a dict of plot figures corresponding to each metric (including the loss).
     """
-    output = { metric: plot_metric(pack, metric, best_epoch) for metric in pack.train.metrics }
+
+    if baselines is None:
+        baselines = {}
+
+    output = { metric: plot_metric(pack, metric, best_epoch, baselines.get(metric, None)) for metric in pack.train.metrics }
     output["loss"] = plot_loss(pack)
     return output
 
 
-def plot_history_metrics(history: RunHistory) -> Dict[str, Figure]:
+def plot_history_metrics(history: RunHistory, baselines: Dict[str, float]) -> Dict[str, Figure]:
     """
     Returns a dict of plot figures corresponding to each metric (including the loss).
     """
-    original = { "original_" + key: value for (key, value) in plot_pack_metrics(history.original_metrics, history.best_val_epoch).items() }
-    smoothed = { "smoothed_" + key: value for (key, value) in plot_pack_metrics(history.smoothed_metrics, history.best_val_epoch).items() }
+    original = { "original_" + key: value for (key, value) in plot_pack_metrics(history.original_metrics, history.best_val_epoch, baselines).items() }
+    smoothed = { "smoothed_" + key: value for (key, value) in plot_pack_metrics(history.smoothed_metrics, history.best_val_epoch, baselines).items() }
     return { **original, **smoothed }
 
 
