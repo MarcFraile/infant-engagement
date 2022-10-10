@@ -63,4 +63,4 @@ The distributed code assumes you have access to a GPU cluster that uses SLURM fo
 ## Machine Attention Calculation
 
 * To calculate a selection of post-hoc machine attention methods on the comparison set (see [Human Attention Annotations](#human-attention-annotations)), first create the snippets as described, and then run `scripts/machine_attention/calculate_machine_attention.py`.
-* To compare the human attention annotations vs. the machine attention maps, use `scripts/attention_comparison/calculate_similarity_metrics.py`. This uses a selection of comparison methods (based on previous literature) to evaluate the human-likeness of the machine attention maps on the comparison set.
+* To calculate a selection of similarity metrics comparing the human attention annotations vs. the machine attention maps, use `scripts/attention_comparison/calculate_similarity_metrics.py`. This uses a selection of comparison methods (based on previous literature) to evaluate the human-likeness of the machine attention maps on the comparison set.

@@ -73,17 +73,17 @@ DOWNSAMPLE_SIGMA  : float           = 5.0
 
 NET_DIRS : Dict[str, Dict[str, Path]] = {
     "people": {
-        "attending"     : Path("output/relabeled/main/20220405T212235"),
-        "participating" : Path("output/relabeled/main/20220405T211630"),
+        "attending"     : Path("artifacts/final/20221006T102353"),
+        # "participating" : Path("artifacts/final/20220405T211630"),
     },
-    "eggs"  : {
-        "attending"     : Path("output/relabeled/main/20220405T222620"),
-        "participating" : Path("output/relabeled/main/20220407T110032"),
-    },
-    "drums" : {
-        "attending"     : Path("output/relabeled/main/20220406T155349"),
-        "participating" : Path("output/relabeled/main/20220407T105856"),
-    },
+    # "eggs"  : {
+    #     "attending"     : Path("artifacts/final/20220405T222620"),
+    #     "participating" : Path("artifacts/final/20220407T110032"),
+    # },
+    # "drums" : {
+    #     "attending"     : Path("artifacts/final/20220406T155349"),
+    #     "participating" : Path("artifacts/final/20220407T105856"),
+    # },
 }
 
 FLATTENED_NET_DIRS = { f"NET_ROOT_{task.upper()}_{variable.upper()}": path for (task, inner) in NET_DIRS.items() for (variable, path) in inner.items() }
